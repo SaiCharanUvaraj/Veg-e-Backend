@@ -25,13 +25,6 @@ app.use(cors({
     origin: 'http://localhost:5173',
 }));
 
-/*
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const buildPath = path.join(__dirname, '../client/dist');
-app.use(express.static(buildPath));
-*/
-
 const connectDB = async () => {
     try 
     {
@@ -48,12 +41,6 @@ connectDB();
 app.get('/', (req, res) => {
     res.send('Server is running');
 });
-
-/*
-app.get('*', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
-  });
-*/
 
 app.post('/send-otp', async(req, res) => {
     const {number}=req.body;
