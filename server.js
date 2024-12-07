@@ -36,6 +36,7 @@ const connectDB = async () => {
     try 
     {
       await mongoose.connect(MONGO_URI);
+      console.log("Mongo DB Atlas cloud connected to server")
     } 
     catch (err) 
     {
