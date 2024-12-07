@@ -29,17 +29,16 @@ const connectDB = async () => {
     try 
     {
       await mongoose.connect(MONGO_URI);
-      console.log("Mongo DB Atlas cloud connected to server")
+      return "Mongo DB Atlas cloud connected to server";
     } 
     catch (err) 
     {
-      console.error('MongoDB connection error:', err);
+      return err;
     }
 };
-connectDB();
 
 app.get('/', (req, res) => {
-    res.send('Server is running');
+    res.send(`Server is running... \n ${connectDB()}`);
 });
 
 app.post('/send-otp', async(req, res) => {
