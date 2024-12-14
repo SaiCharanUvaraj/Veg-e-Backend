@@ -14,6 +14,8 @@ import deleteOtp from './controllers/DeleteOtp.js';
 import authUser from './controllers/AuthUser.js';
 import verifyForgotOtp from './controllers/VerifyForgotOtp.js';
 import saveForgotOtp from './controllers/saveForgotOtp.js';
+import updateItems from './admin/controllers/updateItems.js';
+import deleteItem from './admin/controllers/DeleteItem.js';
 
 dotenv.config();
 const app = express();
@@ -24,6 +26,9 @@ app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173',
 }));
+
+const __filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(__filename);
 
 const connectDB = async () => {
     try 
@@ -39,7 +44,7 @@ const connectDB = async () => {
 connectDB();
 
 app.get('/', (req, res) => {
-    res.send('Server is running');
+    res.sendFile(path.join(dirname, 'admin', 'frontend', 'index.html'));
 });
 
 app.post('/send-otp', async(req, res) => {
@@ -93,6 +98,18 @@ app.post('/auth-user',async(req,res) =>{
     const {phone,pwd}=req.body;
     const response=await authUser(phone,pwd);
     res.status(200).json(response);
+});
+
+app.post('/update-items',async(req,res) =>{
+    const {item,type,price,quantity}=req.body;
+    await updateItems(item,type,price,quantity);
+    res.status(200).send("Item updated...");
+});
+
+app.post('/delete-items',async(req,res) =>{
+    const {item}=req.body;
+    await deleteItem(item)
+    res.status(200).send("Item deleted...");
 });
 
 app.listen(PORT, () => {

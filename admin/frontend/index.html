@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veg-e Admin</title>
+</head>
+<body>
+    <h1>Veg-e Admin</h1>
+    <div>
+        <button onclick="location.href='#update-item'"> Add or Update items</button>
+        <button onclick="location.href='#delete-item'"> Add or Delete items</button>
+    </div>
+    <form id="update-item" onsubmit="updateItem(event)">
+        <h1>Update or Add items</h1>
+        <label for="name">Item:</label>
+        <input type="text" id="item-name" required>
+        <br><br>
+
+        <label for="type">Item type:</label>
+        <input type="text" id="item-type" required>
+        <br><br>
+
+        <label for="amount">Available amount:</label>
+        <input type="number" id="item-amt" required>
+        <br><br>
+
+        <label for="price">Price (per kg):</label>
+        <input type="number" id="item-price" required>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <form id="delete-item" onsubmit="deleteItem(event)">
+        <h1>Delete items</h1>
+        <label for="name">Item:</label>
+        <input type="text" id="item-name-del" required>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const updateItem = async(e) => {
+            e.preventDefault(); 
+            const item = document.getElementById("item-name").value;
+            const type = document.getElementById("item-type").value;
+            const price = document.getElementById("item-price").value;
+            const quantity = document.getElementById("item-amt").value;
+            try 
+            {
+                const response = await axios.post('http://localhost:3000/update-items', {
+                    item,
+                    type,
+                    price,
+                    quantity
+                });
+                console.log(response.data);
+            } 
+            catch (error) 
+            {
+                console.log('Error in adding item:', error);
+            }
+        }
+
+        const deleteItem = async(e) => {
+            e.preventDefault(); 
+            const item = document.getElementById("item-name-del").value;
+            try 
+            {
+                const response = await axios.post('http://localhost:3000/delete-items', {item});
+                console.log(response.data);
+            } 
+            catch (error) 
+            {
+                console.log('Error in deleting item:', error);
+            }
+        }
+    </script>
+</body>
+</html>
