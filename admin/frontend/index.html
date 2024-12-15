@@ -43,14 +43,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        const updateItem = async(e) => {
-            e.preventDefault(); 
+        const updateItem = async (e) => {
+            e.preventDefault();
             const item = document.getElementById("item-name").value;
             const type = document.getElementById("item-type").value;
             const price = document.getElementById("item-price").value;
             const quantity = document.getElementById("item-amt").value;
-            try 
-            {
+            try {
                 const response = await axios.post('http://localhost:3000/update-items', {
                     item,
                     type,
@@ -58,26 +57,21 @@
                     quantity
                 });
                 console.log(response.data);
-            } 
-            catch (error) 
-            {
+            } catch (error) {
                 console.log('Error in adding item:', error);
             }
-        }
-
-        const deleteItem = async(e) => {
-            e.preventDefault(); 
+        };
+    
+        const deleteItem = async (e) => {
+            e.preventDefault();
             const item = document.getElementById("item-name-del").value;
-            try 
-            {
-                const response = await axios.post('http://localhost:3000/delete-items', {item});
+            try {
+                const response = await axios.post('http://localhost:3000/delete-items',{ item });
                 console.log(response.data);
-            } 
-            catch (error) 
-            {
+            } catch (error) {
                 console.log('Error in deleting item:', error);
             }
-        }
+        };
     </script>
 </body>
 </html>
