@@ -1,5 +1,5 @@
 import itemModel from "../models/ItemSchema.js";
-const updateItems = async(item,type,price,quantity) =>{
+const updateItem = async(item,type,price,quantity) =>{
     try
     {
       await itemModel.findOneAndUpdate(
@@ -17,4 +17,4 @@ const updateItems = async(item,type,price,quantity) =>{
       console.error('Error in updating items: ', error);
     }
 }
-export default updateItems;
+export default updateItem;

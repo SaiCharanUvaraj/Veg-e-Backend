@@ -14,8 +14,8 @@ import deleteOtp from './controllers/DeleteOtp.js';
 import authUser from './controllers/AuthUser.js';
 import verifyForgotOtp from './controllers/VerifyForgotOtp.js';
 import saveForgotOtp from './controllers/saveForgotOtp.js';
-import updateItems from './admin/controllers/updateItems.js';
 import deleteItem from './admin/controllers/DeleteItem.js';
+import updateItem from './admin/controllers/updateItems.js';
 
 dotenv.config();
 const app = express();
@@ -102,7 +102,7 @@ app.post('/auth-user',async(req,res) =>{
 
 app.post('/update-items',async(req,res) =>{
     const {item,type,price,quantity}=req.body;
-    await updateItems(item,type,price,quantity);
+    await updateItem(item,type,price,quantity);
     res.status(200).send("Item updated...");
 });
 
