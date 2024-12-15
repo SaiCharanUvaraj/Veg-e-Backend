@@ -21,10 +21,15 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI=process.env.MONGO_URI;
+const BACKEND_URL=process.env.BACKEND_URL;
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    BACKEND_URL,
+  ];
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: allowedOrigins
 }));
 
 const __filename = fileURLToPath(import.meta.url);
