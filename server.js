@@ -23,16 +23,15 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URI=process.env.MONGO_URI;
 
 const allowedOrigins = [
+    'http://localhost:5174',
     'http://localhost:5173',
     'https://veg-e.netlify.app/',
+    'https://veg-e-admin.netlify.app/'
   ];
 app.use(express.json());
 app.use(cors({
     origin: allowedOrigins
 }));
-
-const __filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(__filename);
 
 const connectDB = async () => {
     try 
@@ -48,7 +47,7 @@ const connectDB = async () => {
 connectDB();
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(dirname, 'admin', 'frontend', 'index.html'));
+    res.send("Server is running");
 });
 
 app.post('/send-otp', async(req, res) => {
