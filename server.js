@@ -1,10 +1,10 @@
+// importing modules
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from "mongoose";
-import path from 'path';
-import { fileURLToPath } from 'url';
 
+// importing some basic controller functions
 import sendOTP from './controllers/SendOtp.js'
 import saveOtp from './controllers/SaveOtp.js';
 import verifyOtp from './controllers/VerifyOtp.js';
@@ -14,24 +14,44 @@ import deleteOtp from './controllers/DeleteOtp.js';
 import authUser from './controllers/AuthUser.js';
 import verifyForgotOtp from './controllers/VerifyForgotOtp.js';
 import saveForgotOtp from './controllers/saveForgotOtp.js';
-import deleteItem from './admin/controllers/DeleteItem.js';
-import updateItem from './admin/controllers/UpdateItem.js';
 
+// importing admin related controller functions
+import updateItem from './controllers/UpdateItem.js';
+import deleteItem from './controllers/DeleteItem.js';
+
+// importing route functions
+import fetchItems from './routes/FetchItems.js';
+
+// extracting env variables
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI=process.env.MONGO_URI;
 
-const allowedOrigins = [
-    'http://localhost:5174',
-    'http://localhost:5173',
-    'https://veg-e.netlify.app/',
-    'https://veg-e-admin.netlify.app/'
-  ];
+// CORS Policy updations
+const corsOptions = {
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            'http://localhost:5174',
+            'http://localhost:5173',
+            'https://veg-e.netlify.app',
+            'https://veg-e-admin.netlify.app',];
+    
+        if (!origin || allowedOrigins.includes(origin))
+            callback(null, true);
+        else
+            callback(new Error('Not allowed by CORS'));
+        },
+    credentials: true,  
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
+// using middlewares
 app.use(express.json());
-app.use(cors({
-    origin: allowedOrigins
-}));
+
+// Routes
+app.use(fetchItems);
 
 const connectDB = async () => {
     try 
@@ -59,7 +79,7 @@ app.post('/send-otp', async(req, res) => {
         return;
     }
     const otp = Math.floor(Math.random() * (10000 - 1000)) + 1000;
-    sendOTP(number,otp);
+    //sendOTP(number,otp);
     saveOtp(number,otp);
     res.send("OTP was sent to your number").status(200);
 });
@@ -73,7 +93,7 @@ app.post('/forgot-password', async(req, res) => {
         return;
     }
     const otp = Math.floor(Math.random() * (10000 - 1000)) + 1000;
-    sendOTP(number,otp);
+    //sendOTP(number,otp);
     saveForgotOtp(number,otp);
     res.send("OTP was sent to your number").status(200);
 });
@@ -114,6 +134,8 @@ app.post('/delete-items',async(req,res) =>{
     await deleteItem(item);
     res.status(200).send("Item deleted...");
 });
+
+//Rest of the routes in Routes folder
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
