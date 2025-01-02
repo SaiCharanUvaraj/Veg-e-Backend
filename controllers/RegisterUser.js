@@ -7,12 +7,12 @@ const registerUser = async(phone,password) =>{
           phone,
           password
         });
-        return {success:true, message:"Signed up successfully !"};
+        return {success:true};
     } 
     catch (error) 
     {
         console.error("Error in registering user: ", error);
-        return {success:false, message:"Internal Server error"};
+        return {success:false};
     }
 }
 export default registerUser;

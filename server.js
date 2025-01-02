@@ -21,6 +21,7 @@ import deleteItem from './controllers/DeleteItem.js';
 
 // importing route functions
 import fetchItems from './routes/FetchItems.js';
+import createProfile from './routes/CreateProfile.js';
 
 // extracting env variables
 dotenv.config();
@@ -52,6 +53,7 @@ app.use(express.json());
 
 // Routes
 app.use(fetchItems);
+app.use(createProfile);
 
 const connectDB = async () => {
     try 
