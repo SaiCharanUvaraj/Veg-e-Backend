@@ -13,8 +13,7 @@ const authUser = async (phone, pwd) => {
     } 
     catch (error) 
     {
-        console.error('Error in authenticating user: ', error);
-        return { success: false, message: 'Internal server error' };
+        return { success: false, message: 'Error in signing into account. Please try again !' };
     }
 };
 

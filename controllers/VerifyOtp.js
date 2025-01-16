@@ -12,8 +12,7 @@ const verifyOtp=async(phone,otp)=>{
     } 
     catch (error) 
     {
-        console.error('Error in verifying OTP: ', error);
-        return { success: false, message: 'Internal server error' };
+        return { success: false, message: 'Error in verifying OTP. Please try again !' };
     }
 }
 export default verifyOtp;

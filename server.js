@@ -3,6 +3,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from "mongoose";
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 
 // importing some basic controller functions
 import sendOTP from './controllers/SendOtp.js'
@@ -22,12 +24,14 @@ import deleteItem from './controllers/DeleteItem.js';
 // importing route functions
 import fetchItems from './routes/FetchItems.js';
 import createProfile from './routes/CreateProfile.js';
+import fetchInfo from './routes/FetchInfo.js';
 
 // extracting env variables
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI=process.env.MONGO_URI;
+const SECRET_KEY=process.env.JWT_KEY;
 
 // CORS Policy updations
 const corsOptions = {
@@ -50,10 +54,12 @@ app.use(cors(corsOptions));
 
 // using middlewares
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
 app.use(fetchItems);
 app.use(createProfile);
+app.use(fetchInfo);
 
 const connectDB = async () => {
     try 
@@ -119,11 +125,31 @@ app.post('/register-user',async(req,res) =>{
     res.status(200).json(response);
 });
 
-app.post('/auth-user',async(req,res) =>{
-    const {phone,pwd}=req.body;
-    const response=await authUser(phone,pwd);
+app.post('/auth-user', async (req, res) => {
+    const { phone, pwd } = req.body;
+    const response = await authUser(phone, pwd);
+    if(response.success) 
+    {
+        const token = jwt.sign({ phone }, SECRET_KEY, { expiresIn: '1hr' });
+        res.cookie('VegeAuthToken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 3600000,
+        });
+    }
     res.status(200).json(response);
 });
+
+app.post('/logout', async (req, res) => {
+    res.clearCookie('VegeAuthToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+    });
+    res.status(200).json({success: true});      
+});
+
 
 app.post('/update-items',async(req,res) =>{
     const {item,type,price,quantity}=req.body;

@@ -11,7 +11,6 @@ const registerUser = async(phone,password) =>{
     } 
     catch (error) 
     {
-        console.error("Error in registering user: ", error);
         return {success:false};
     }
 }

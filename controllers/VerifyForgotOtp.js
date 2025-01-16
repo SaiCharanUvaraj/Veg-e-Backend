@@ -12,8 +12,7 @@ const verifyForgotOtp = async(phone,otp) =>{
     } 
     catch (error) 
     {
-        console.error('Error in verifying forgot OTP: ', error);
-        return { success: false, message: 'Internal server error' };
+        return { success: false, message: 'Error in verifying forgot OTP. Please try again !' };
     }
 
 }
