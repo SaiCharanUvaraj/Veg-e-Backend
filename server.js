@@ -25,6 +25,7 @@ import deleteItem from './controllers/DeleteItem.js';
 import fetchItems from './routes/FetchItems.js';
 import createProfile from './routes/CreateProfile.js';
 import fetchInfo from './routes/FetchInfo.js';
+import fetchItemsInfo from './routes/FetchItemsInfo.js';
 
 // extracting env variables
 dotenv.config();
@@ -60,6 +61,7 @@ app.use(cookieParser());
 app.use(fetchItems);
 app.use(createProfile);
 app.use(fetchInfo);
+app.use(fetchItemsInfo);
 
 const connectDB = async () => {
     try 
@@ -152,8 +154,8 @@ app.post('/logout', async (req, res) => {
 
 
 app.post('/update-items',async(req,res) =>{
-    const {item,type,price,quantity}=req.body;
-    await updateItem(item,type,price,quantity);
+    const {item,type,price,quantity,url}=req.body;
+    await updateItem(item,type,price,quantity,url);
     res.status(200).send("Item updated...");
 });
 

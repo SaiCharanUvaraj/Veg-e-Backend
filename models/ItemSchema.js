@@ -17,6 +17,10 @@ const ItemSchema=new mongoose.Schema({
         type: String,
         required: true
     },
+    url:{
+      type: String,
+      required: true
+    },
   })
 const itemModel=mongoose.model("Item",ItemSchema);
 export default itemModel;

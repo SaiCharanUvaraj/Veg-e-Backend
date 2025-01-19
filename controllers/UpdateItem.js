@@ -1,5 +1,5 @@
 import itemModel from "../models/ItemSchema.js";
-const updateItem = async(item,type,price,quantity) =>{
+const updateItem = async(item,type,price,quantity,url) =>{
     try
     {
       await itemModel.findOneAndUpdate(
@@ -7,7 +7,8 @@ const updateItem = async(item,type,price,quantity) =>{
         { 
             type, 
             price, 
-            quantity 
+            quantity,
+            url
         },
         {new:true,upsert: true}
       )
