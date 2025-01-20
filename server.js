@@ -22,7 +22,6 @@ import updateItem from './controllers/UpdateItem.js';
 import deleteItem from './controllers/DeleteItem.js';
 
 // importing route functions
-import fetchItems from './routes/FetchItems.js';
 import createProfile from './routes/CreateProfile.js';
 import fetchInfo from './routes/FetchInfo.js';
 import fetchItemsInfo from './routes/FetchItemsInfo.js';
@@ -58,7 +57,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
-app.use(fetchItems);
 app.use(createProfile);
 app.use(fetchInfo);
 app.use(fetchItemsInfo);
@@ -67,7 +65,6 @@ const connectDB = async () => {
     try 
     {
       await mongoose.connect(MONGO_URI);
-      console.log("Mongo DB Atlas cloud connected to server")
     } 
     catch (err) 
     {
