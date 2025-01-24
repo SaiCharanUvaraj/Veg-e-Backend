@@ -25,6 +25,8 @@ import deleteItem from './controllers/DeleteItem.js';
 import createProfile from './routes/CreateProfile.js';
 import fetchInfo from './routes/FetchInfo.js';
 import fetchItemsInfo from './routes/FetchItemsInfo.js';
+import addToCart from './routes/AddToCart.js';
+import removeFromCart from './routes/RemoveFromCart.js';
 
 // extracting env variables
 dotenv.config();
@@ -60,6 +62,8 @@ app.use(cookieParser());
 app.use(createProfile);
 app.use(fetchInfo);
 app.use(fetchItemsInfo);
+app.use(addToCart);
+app.use(removeFromCart);
 
 const connectDB = async () => {
     try 
