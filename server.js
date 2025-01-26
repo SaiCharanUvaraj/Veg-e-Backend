@@ -27,6 +27,7 @@ import fetchInfo from './routes/FetchInfo.js';
 import fetchItemsInfo from './routes/FetchItemsInfo.js';
 import addToCart from './routes/AddToCart.js';
 import removeFromCart from './routes/RemoveFromCart.js';
+import placeOrder from './routes/PlaceOrder.js';
 
 // extracting env variables
 dotenv.config();
@@ -64,6 +65,7 @@ app.use(fetchInfo);
 app.use(fetchItemsInfo);
 app.use(addToCart);
 app.use(removeFromCart);
+app.use(placeOrder);
 
 const connectDB = async () => {
     try 
