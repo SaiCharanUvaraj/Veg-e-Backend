@@ -92,7 +92,7 @@ app.post('/send-otp', async(req, res) => {
         return;
     }
     const otp = Math.floor(Math.random() * (10000 - 1000)) + 1000;
-    //sendOTP(number,otp);
+    sendOTP(number,otp);
     saveOtp(number,otp);
     res.send("OTP was sent to your number").status(200);
 });
@@ -106,7 +106,7 @@ app.post('/forgot-password', async(req, res) => {
         return;
     }
     const otp = Math.floor(Math.random() * (10000 - 1000)) + 1000;
-    //sendOTP(number,otp);
+    sendOTP(number,otp);
     saveForgotOtp(number,otp);
     res.send("OTP was sent to your number").status(200);
 });
