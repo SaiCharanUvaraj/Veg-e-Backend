@@ -44,8 +44,8 @@ const corsOptions = {
             'http://localhost:5173',
             'https://veg-e.netlify.app',
             'https://veg-e-admin.netlify.app',
-            'https://veg-e-react.netlify.app/',
-            'https://veg-e-admin-react.netlify.app/'];
+            'https://veg-e-react.netlify.app',
+            'https://veg-e-admin-react.netlify.app'];
     
         if (!origin || allowedOrigins.includes(origin))
             callback(null, true);
